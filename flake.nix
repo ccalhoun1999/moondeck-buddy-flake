@@ -21,25 +21,42 @@
               owner = "FrogTheFrog";
               repo = "moondeck-buddy";
               rev = "main";
+              fetchSubmodules = true;
               sha256 = "/cVEBpXVIdgKZ9yonwUDayii0T/X04PmLhTH/2S2cFc=";
             };
 
             nativeBuildInputs = [
               pkgs.cmake
-              pkgs.qt6.full
-              pkgs.xorg.libX11
+              pkgs.qt6.wrapQtAppsHook
+              pkgs.qt6.qtbase
+              pkgs.procps
+              pkgs.ninja
               pkgs.xorg.libXrandr
-              pkgs.xorg.libXext
-              # pkgs.procps
-              pkgs.procs
+              # pkgs.libclang
               # pkgs.unixtools.procps
               # pkgs.ncurses5
             ];
 
+            
+            buildInputs = [
+              pkgs.qt6.qtwebsockets
+              pkgs.qt6.qthttpserver
+              # pkgs.xorg.libX11
+              # pkgs.xorg.libXext
+              # pkgs.qt6.full
+            ];
+
             # Explicitly set library paths if needed
             cmakeFlags = [
+              # "-DPROCPS_LIBRARY=${pkgs.unixtools.procps}/lib"
+              # "-DPROCPS_INCLUDE_DIR=${pkgs.unixtools.procps}/include"
               "-DPROCPS_LIBRARY=${pkgs.procps}/lib"
               "-DPROCPS_INCLUDE_DIR=${pkgs.procps}/include"
+              # "-DENABLE_CLANG_TIDY=True"
+              # "-DCMAKE_CXX_COMPILER=cl"
+              # "-DCMAKE_BUILD_TYPE:STRING=Release"
+              # "-B build"
+              # "-G Ninja"
             ];
 
             # installPhase = ''
